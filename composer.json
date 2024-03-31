@@ -1,0 +1,21 @@
+{
+    "name": "potter/irc-client",
+    "description": "PHP IRC Client",
+    "type": "library",
+    "require": {
+        "php": "^8.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Potter\\Socket\\IRC\\Client\\": "src/Potter/Socket/IRC/Client/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jay Potter",
+            "email": "j@ypotter.ca"
+        }
+    ],
+    "minimum-stability": "dev"
+}

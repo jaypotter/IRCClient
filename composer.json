@@ -11,7 +11,7 @@
         "potter/cloneable": "dev-main",
         "potter/container-aware": "dev-main",
         "potter/event": "dev-main",
-        "potter/socket-client": "dev-main",
+        "potter/resource-aware": "dev-main",
         "psr/container": "^2.0@dev",
         "potter/tickable-interface": "dev-main"
     },
@@ -24,7 +24,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Potter\\Socket\\IRC\\Client\\": "src/Potter/Socket/IRC/Client/"
+            "Potter\\Resource\\IRC\\": "src/Potter/Resource/IRC/"
         }
     },
     "authors": [

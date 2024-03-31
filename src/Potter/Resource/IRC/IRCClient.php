@@ -2,31 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Potter\Socket\IRC\Client;
+namespace Potter\Resource\IRC;
 
 use \Potter\Aware\{AwareInterface, AwareTrait};
 use \Potter\Container\Aware\{ContainerAwareInterface, ContainerAwareTrait};
 use \Potter\Cloneable\{CloneableInterface, CloneableTrait};
 use \Potter\Event\{Emitter\EmitterInterface, Event};
-use \Potter\Socket\Aware\{SocketAwareInterface, SocketAwareTrait};
-use \Potter\Socket\Client\SocketClientTrait;
+use \Potter\Resource\Aware\{ResourceAwareInterface, ResourceAwareTrait};
 use \Potter\Tickable\TickableInterface;
 use \Psr\Container\ContainerInterface;
-use \Socket;
 
-final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface, TickableInterface
+final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, ResourceAwareInterface, TickableInterface
 {
-    use AwareTrait, CloneableTrait, ContainerAwareTrait, IRCClientTrait, SocketAwareTrait, SocketClientTrait;
+    use AwareTrait, CloneableTrait, ContainerAwareTrait, IRCClientTrait, ResourceAwareTrait;
     
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
-        if ($this->getSocket() instanceof Socket) {
-            $link = $this->getLink();
-            $attributes = $link->getAttributes();
-            $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
-            $this->unblockSocket();
-        }
         $this->getEventDispatcher()->dispatch(new Event('onConnection', $this));
     }
     

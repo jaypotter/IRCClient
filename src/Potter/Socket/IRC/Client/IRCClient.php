@@ -9,12 +9,12 @@ use \Potter\Container\Aware\{ContainerAwareInterface, ContainerAwareTrait};
 use \Potter\Cloneable\{CloneableInterface, CloneableTrait};
 use \Potter\Event\{Emitter\EmitterInterface, Event};
 use \Potter\Socket\Aware\{SocketAwareInterface, SocketAwareTrait};
-use \Potter\Socket\Client\{AbstractSocketClient, SocketClientTrait};
-use \Psr\{Container\ContainerInterface, EventDispatcher\EventDispatcherInterface, Link\LinkInterface};
+use \Potter\Socket\Client\SocketClientTrait;
+use \Psr\Container\ContainerInterface;
 
-final class IRCClient extends AbstractSocketClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface
+final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface
 {
-    use AwareTrait, CloneableTrait, ContainerAwareTrait, SocketAwareTrait, SocketClientTrait;
+    use AwareTrait, CloneableTrait, ContainerAwareTrait, IRCClientTrait, SocketAwareTrait, SocketClientTrait;
     
     public function __construct(ContainerInterface $container)
     {
@@ -23,20 +23,5 @@ final class IRCClient extends AbstractSocketClient implements AwareInterface, Cl
         $attributes = $link->getAttributes();
         $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
         $this->getEventDispatcher()->dispatch(new Event('onConnection', $this));
-    }
-    
-    private function getEventDispatcher(): EventDispatcherInterface
-    {
-        return $this->getContainer()->get('event_dispatcher');
-    }
-    
-    private function getLink(): LinkInterface 
-    {
-        return $this->getContainer()->get('link');
-    }
-    
-    private function getLinkAttributes(): array
-    {
-        return $this->getLink()->getAttributes();
     }
 }

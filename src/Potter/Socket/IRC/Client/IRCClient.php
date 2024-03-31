@@ -12,6 +12,7 @@ use \Potter\Socket\Aware\{SocketAwareInterface, SocketAwareTrait};
 use \Potter\Socket\Client\SocketClientTrait;
 use \Potter\Tickable\TickableInterface;
 use \Psr\Container\ContainerInterface;
+use \Socket;
 
 final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface, TickableInterface
 {
@@ -20,7 +21,7 @@ final class IRCClient extends AbstractIRCClient implements AwareInterface, Clone
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
-        if ($this->getSocket() instanceof \Socket) {
+        if ($this->getSocket() instanceof Socket) {
             $link = $this->getLink();
             $attributes = $link->getAttributes();
             $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);

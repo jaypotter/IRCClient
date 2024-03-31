@@ -24,7 +24,7 @@ final class IRCClient extends AbstractIRCClient implements AwareInterface, Clone
     
     public function tick(): void
     {
-        $message = $this->readResource();
+        $message = $this->readResource(2048);
         if (strlen($message) > 0) {
             $this->getEventDispatcher()->dispatch(new Event('onReceive', $this));
         }

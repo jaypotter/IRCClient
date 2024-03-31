@@ -22,7 +22,7 @@ final class IRCClient extends AbstractSocketClient implements AwareInterface, Cl
         $link = $this->getLink();
         $attributes = $link->getAttributes();
         $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
-        $this->getEventDispatcher()->dispatch(new Event('onConnection'));
+        $this->getEventDispatcher()->dispatch(new Event('onConnection', $this));
     }
     
     private function getEventDispatcher(): EventDispatcherInterface

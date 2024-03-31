@@ -10,9 +10,10 @@ use \Potter\Cloneable\{CloneableInterface, CloneableTrait};
 use \Potter\Event\{Emitter\EmitterInterface, Event};
 use \Potter\Socket\Aware\{SocketAwareInterface, SocketAwareTrait};
 use \Potter\Socket\Client\SocketClientTrait;
+use \Potter\Tickable\TickableInterface;
 use \Psr\Container\ContainerInterface;
 
-final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface
+final class IRCClient extends AbstractIRCClient implements AwareInterface, CloneableInterface, ContainerAwareInterface, EmitterInterface, SocketAwareInterface, TickableInterface
 {
     use AwareTrait, CloneableTrait, ContainerAwareTrait, IRCClientTrait, SocketAwareTrait, SocketClientTrait;
     
@@ -24,5 +25,13 @@ final class IRCClient extends AbstractIRCClient implements AwareInterface, Clone
         $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
         $this->unblockSocket();
         $this->getEventDispatcher()->dispatch(new Event('onConnection', $this));
+    }
+    
+    public function tick(): void
+    {
+        $message = $this->readSocketMessage();
+        if (strlen($message) > 0) {
+            $this->getEventDispatcher()->dispatch(new Event('onReceive', $this));
+        }
     }
 }

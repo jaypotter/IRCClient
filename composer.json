@@ -13,8 +13,7 @@
         "potter/event": "dev-main",
         "potter/socket-client": "dev-main",
         "psr/container": "^2.0@dev",
-        "psr/event-dispatcher": "^1.0@dev",
-        "psr/link": "^2.0@dev"
+        "psr/event-dispatcher": "^1.0@dev"
     },
     "suggest": {
         "potter/socket-client": "dev-main",

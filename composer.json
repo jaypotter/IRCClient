@@ -5,7 +5,8 @@
     "require": {
         "php": "^8.3",
         "potter/irc-client-listener-provider": "dev-main",
-        "potter/emitter-interface": "dev-main"
+        "potter/emitter-interface": "dev-main",
+        "potter/socket-client": "dev-main"
     },
     "license": "MIT",
     "autoload": {

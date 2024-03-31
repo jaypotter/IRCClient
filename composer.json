@@ -4,6 +4,8 @@
     "type": "library",
     "require": {
         "php": "^8.3",
+        "potter/irc-client-interface": "dev-main",
+        "potter/irc-client-trait": "dev-main",
         "potter/irc-client-listener-provider": "dev-main",
         "potter/aware": "dev-main",
         "potter/cloneable": "dev-main",

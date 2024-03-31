@@ -20,10 +20,12 @@ final class IRCClient extends AbstractIRCClient implements AwareInterface, Clone
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
-        $link = $this->getLink();
-        $attributes = $link->getAttributes();
-        $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
-        $this->unblockSocket();
+        if ($this->getSocket() instanceof \Socket) {
+            $link = $this->getLink();
+            $attributes = $link->getAttributes();
+            $this->connectSocket($link->getHref(), array_key_exists('port', $attributes) ? $attributes['port'] : null);
+            $this->unblockSocket();
+        }
         $this->getEventDispatcher()->dispatch(new Event('onConnection', $this));
     }
     
